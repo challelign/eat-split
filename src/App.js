@@ -70,6 +70,17 @@ function App() {
     setSelectedFriend((cur) => (cur?.id === friend.id ? null : friend));
     setShowAddFriend(false);
   };
+  const handleSplitBill = (value) => {
+    console.log(value);
+    setFriends((friends) =>
+      friends.map((friend) =>
+        friend?.id === selectedFriend?.id
+          ? { ...friend, balance: friend.balance + value }
+          : friend
+      )
+    );
+    setSelectedFriend(null);
+  };
   return (
     <div className="app">
       <div className="sidebar">
@@ -87,7 +98,12 @@ function App() {
       </div>
 
       {/* if selectedFriend is false not form is display */}
-      {selectedFriend && <FormsSplitBill selectedFriend={selectedFriend} />}
+      {selectedFriend && (
+        <FormsSplitBill
+          selectedFriend={selectedFriend}
+          onSplitBill={handleSplitBill}
+        />
+      )}
     </div>
   );
 }
